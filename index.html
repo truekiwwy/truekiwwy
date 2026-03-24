@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>truekiwwy_ — Développeur & Créateur</title>
+  <meta name="description"
+    content="Portfolio de truekiwwy_ — Développeur, créateur de bots Discord et passionné de tech." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#7B68EE',
+              600: '#5865F2',
+              900: '#1e1b4b',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    /* ─── Gradient text ─── */
+    .gt {
+      background: linear-gradient(135deg, #a78bfa, #818cf8, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Glass morphism ─── */
+    .glass {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a14;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #7B68EE;
+      border-radius: 4px;
+    }
+
+    /* ─── Selection ─── */
+    ::selection {
+      background: #7B68EE;
+      color: white;
+    }
+
+    /* ─── Navbar blur ─── */
+    .nav-blur {
+      backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(10, 10, 20, 0.88);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* ─── Navbar hidden (smart scroll) ─── */
+    .nav-hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    .nav-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    nav {
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* ─── Hero gradient bg ─── */
+    .hero-gradient {
+      background: radial-gradient(ellipse at top, #1e1b4b 0%, #0f0f23 50%, #0a0a14 100%);
+    }
+
+    /* ─── Orbs ─── */
+    @keyframes float-orb {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -30px) scale(1.1);
+      }
+
+      66% {
+        transform: translate(-20px, 20px) scale(0.9);
+      }
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      animation: float-orb 20s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(#7B68EE, #5865F2);
+      top: -200px;
+      left: -150px;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(#a78bfa, #60a5fa);
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 7s;
+    }
+
+    .orb-3 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(#5865F2, #818cf8);
+      top: 50%;
+      left: 55%;
+      animation-delay: 14s;
+    }
+
+    /* ─── Fade-in on scroll ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Code window syntax ─── */
+    .c-kw {
+      color: #c084fc;
+    }
+
+    /* keyword: const, let */
+    .c-var {
+      color: #a78bfa;
+    }
+
+    /* variable name */
+    .c-str {
+      color: #86efac;
+    }
+
+    /* string */
+    .c-prop {
+      color: #93c5fd;
+    }
+
+    /* property */
+    .c-fn {
+      color: #fde68a;
+    }
+
+    /* function/method */
+    .c-cmt {
+      color: #475569;
+      font-style: italic;
+    }
+
+    /* comment */
+    .c-num {
+      color: #fb923c;
+    }
+
+    /* number */
+
+    /* ─── Cursor blink ─── */
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    .cursor {
+      animation: blink 0.9s step-end infinite;
+    }
+
+    /* ─── Skill card hover 3D ─── */
+    .skill-card {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(123, 104, 238, 0.25);
+      border-color: rgba(167, 139, 250, 0.5);
+    }
+
+    .skill-card:hover .skill-icon {
+      transform: scale(1.15) rotate(5deg);
+    }
+
+    .skill-icon {
+      transition: transform 0.3s ease;
+    }
+
+    /* ─── Project card tilt (JS handles transform, CSS resets) ─── */
+    .project-card {
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .project-card:hover {
+      border-color: rgba(123, 104, 238, 0.4);
+      box-shadow: 0 20px 50px rgba(123, 104, 238, 0.15);
+    }
+
+    /* ─── Card hover generic ─── */
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-6px);
+    }
+
+    /* ─── Logo float ─── */
+    @keyframes logo-float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg)
+      }
+
+      50% {
+        transform: translateY(-3px) rotate(2deg)
+      }
+    }
+
+    .logo-anim {
+      animation: logo-float 3s ease-in-out infinite;
+    }
+
+    .logo-anim:hover {
+      animation: none;
+      transform: rotate(15deg) scale(1.15);
+      filter: drop-shadow(0 0 10px rgba(123, 104, 238, 0.7));
+    }
+
+    /* ─── Contact card ─── */
+    .contact-card {
+      transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 40px rgba(123, 104, 238, 0.3);
+      border-color: rgba(123, 104, 238, 0.5);
+    }
+
+    .contact-card:hover .contact-icon {
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 0 50px rgba(123, 104, 238, 0.6);
+    }
+
+    .contact-icon {
+      transition: all 0.3s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-white overflow-x-hidden">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
+
+    /* ═══════════════════════════════════════════════
+       ✏️  MODIFIE CES DONNÉES POUR PERSONNALISER TON PORTFOLIO
+       ═══════════════════════════════════════════════ */
+
+    // ── Infos générales ───────────────────────────────────────────────────────────
+    const ME = {
+      name: "truekiwwy_",           // ✏️ Ton pseudo/nom affiché
+      tagline: "Portfolio",         // ✏️ Sous-titre sous le nom dans la navbar
+      description: "Je crée des projets Discord, des bots, des sites web et des network tools. Développeur passionné, toujours en train de construire quelchose.",
+      // ✏️ ↑ Phrase de présentation dans le hero
+    };
+
+    // ── Animation de typing (les rôles qui s'écrivent/s'effacent) ────────────────
+    const ROLES = [
+      "Developpeur",    // ✏️ Modifie ces mots — ils s'affichent en boucle
+      "Bot Creator",
+      "Front Dev",
+    ];
+
+    // ── Fenêtre de code (ce qui apparaît dans le faux éditeur) ───────────────────
+    // ✏️ Tu peux changer les valeurs entre guillemets (parties vertes)
+    // ✏️ La ligne "role" se synchronise AUTOMATIQUEMENT avec l'animation ROLES ci-dessus
+    // ✏️ Ne touche pas aux balises HTML elles-mêmes
+    // Note: CODE_LINES est maintenant une fonction qui reçoit le texte typé en temps réel
+    const getCodeLines = (typedRole) => [
+      { num: 1, content: <><span className="c-kw">const</span> <span className="c-var">developer</span> = {'{'}</> },
+      { num: 2, content: <>&nbsp;&nbsp;<span className="c-prop">name</span>: <span className="c-str">'truekiwwy_'</span>,</> },
+      // ✏️ Ligne 2 : change 'truekiwwy_' par ton nom/pseudo
+      {
+        num: 3, content: (
+          <>&nbsp;&nbsp;<span className="c-prop">role</span>:&nbsp;
+            <span className="c-str">'{typedRole}'</span>
+            <span className="cursor c-str">|</span>,
+          </>
+        )
+      },
+      { num: 4, content: <>&nbsp;&nbsp;<span className="c-prop">languages</span>: [<span className="c-str">'JS'</span>, <span className="c-str">'Python'</span>, <span className="c-str">'HTML'</span>, <span className="c-str">'CSS'</span>, <span className="c-str">'TypeScript'</span>],</> },
+      // ✏️ Ligne 6 : liste tes langages entre crochets
+      { num: 5, content: <>{'}'}</> },
+      { num: 6, content: <></> },
+      { num: 7, content: <><span className="c-fn">console</span>.<span className="c-fn">log</span>(<span className="c-str">'developer'</span>);</> },
+      // ✏️ Ligne 9 : change le message entre guillemets
+    ];
+
+    // ── Projets mis en avant ──────────────────────────────────────────────────────
+    // ✏️ Chaque objet = une carte projet. Ajoute/supprime des blocs { ... }
+    const PROJECTS = [
+      {
+        emoji: "🤖",
+        title: "truekiwwy 2",
+        desc: "Bot Discord de modération avancée avec 100+ commandes, système de logs, tickets et protections anti-raid.",
+        tags: ["Python", "Discord.py", "PostgreSQL"],
+        link: "https://discord.com/oauth2/authorize?client_id=1273585101296500767&permissions=8&scope=bot",
+        linkLabel: "Voir le bot →",
+        featured: true,
+        color: "from-brand-500/15 to-indigo-600/10",
+        border: "border-brand-500/20",
+      },
+      {
+        emoji: "🌐",
+        title: "truekiwwy.fr",
+        desc: "Site vitrine et documentation pour le bot, avec pages légales et système de pricing.",
+        tags: ["React", "Tailwind", "HTML"],
+        link: "#",
+        linkLabel: "Tu y es déjà !",
+        featured: false,
+        color: "from-blue-500/15 to-cyan-600/10",
+        border: "border-blue-500/20",
+      }
+    ];
+
+    // ── Skills (cartes technos avec icône) ───────────────────────────────────────
+    // ✏️ Chaque objet = une icône dans la grille
+    // ✏️ Pour l'icône : utilise une URL d'image ou un emoji dans le champ "icon"
+    //    Exemples d'URLs gratuites : https://cdn.jsdelivr.net/gh/devicons/devicon/icons/[nom]/[nom]-original.svg
+    //    Exemples : javascript/javascript-original.svg | python/python-original.svg | nodejs/nodejs-original.svg
+    const SKILLS = [
+      // ── Langages ──
+      { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", category: "Langages" },
+      { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", category: "Langages" },
+      { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", category: "Langages" },
+      { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", category: "Langages" },
+      // ✏️ Ajoute tes langages ici en copiant une ligne ci-dessus
+      // Exemple : { name: "Lua", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg", category: "Langages" },
+
+      // ── Frameworks / Outils ──
+      { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Outils" },
+      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", category: "Outils" },
+      { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", category: "Outils" },
+      // ✏️ Ajoute tes outils ici
+
+      // ── Systèmes ──
+      { name: "Linux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", category: "Systèmes" },
+      // ✏️ Ajoute tes systèmes ici
+    ];
+
+    // ── Liens de contact ─────────────────────────────────────────────────────────
+    // ✏️ Modifie les href et labels
+    const CONTACTS = [
+      { icon: "🐙", title: "GitHub", subtitle: "Voir mes repos", href: "https://github.com/truekiwwy", color: "from-gray-500/20 to-gray-700/10", border: "border-gray-500/30" },
+      { icon: "💬", title: "Discord", subtitle: "Rejoindre le serveur", href: "https://discord.gg/BwxtDgBDzE", color: "from-indigo-500/20 to-brand-600/10", border: "border-indigo-500/30" },
+      { icon: "📧", title: "Email", subtitle: "kiwwy.123456789@gmail.com", href: "mailto:kiwwy.123456789@gmail.com", color: "from-brand-500/20 to-violet-600/10", border: "border-brand-500/30" }
+    ];
+
+    // ── Liens navbar ─────────────────────────────────────────────────────────────
+    const NAV_LINKS = [
+      { href: "#projects", label: "Projets" },
+      { href: "#skills", label: "Compétences" },
+      { href: "#contact", label: "Contact" },
+      // ✏️ Ajoute/supprime des liens ici
+    ];
+
+    /* ═══════════════════════════════════════════════
+       FIN DE LA ZONE À MODIFIER
+       Le reste est la logique et le rendu — ne modifie
+       que si tu sais ce que tu fais !
+       ═══════════════════════════════════════════════ */
+
+
+    // ── Hook : typing animation ───────────────────────────────────────────────────
+    function useTyping(roles) {
+      const [displayed, setDisplayed] = useState('');
+      const [roleIdx, setRoleIdx] = useState(0);
+      const [deleting, setDeleting] = useState(false);
+
+      useEffect(() => {
+        const current = roles[roleIdx];
+        let delay;
+        if (!deleting) {
+          if (displayed.length < current.length) {
+            delay = 90;
+            const t = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), delay);
+            return () => clearTimeout(t);
+          } else {
+            delay = 2200;
+            const t = setTimeout(() => setDeleting(true), delay);
+            return () => clearTimeout(t);
+          }
+        } else {
+          if (displayed.length > 0) {
+            delay = 45;
+            const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), delay);
+            return () => clearTimeout(t);
+          } else {
+            setDeleting(false);
+            setRoleIdx((i) => (i + 1) % roles.length);
+          }
+        }
+      }, [displayed, deleting, roleIdx, roles]);
+
+      return displayed;
+    }
+
+    // ── Hook : smart navbar (hide/show on scroll) ─────────────────────────────────
+    function useSmartNav() {
+      const [scrolled, setScrolled] = useState(false);
+      const [hidden, setHidden] = useState(false);
+      const lastY = useRef(0);
+
+      useEffect(() => {
+        let ticking = false;
+        const handler = () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              const y = window.scrollY;
+              setScrolled(y > 50);
+              if (y > lastY.current && y > 100) {
+                setHidden(true);   // scroll down → cache
+              } else {
+                setHidden(false);  // scroll up  → montre
+              }
+              lastY.current = y <= 0 ? 0 : y;
+              ticking = false;
+            });
+            ticking = true;
+          }
+        };
+        window.addEventListener('scroll', handler, { passive: true });
+        return () => window.removeEventListener('scroll', handler);
+      }, []);
+
+      return { scrolled, hidden };
+    }
+
+    // ── Hook : IntersectionObserver pour reveal au scroll ────────────────────────
+    function useReveal() {
+      useEffect(() => {
+        const els = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+        els.forEach(el => io.observe(el));
+        return () => io.disconnect();
+      }, []);
+    }
+
+    // ── Composant : Navbar ────────────────────────────────────────────────────────
+    function Navbar() {
+      const { scrolled, hidden } = useSmartNav();
+      const [mobileOpen, setMobileOpen] = useState(false);
+
+      return (
+        <nav className={`fixed top-0 left-0 right-0 z-50 ${scrolled ? 'nav-blur shadow-xl' : 'bg-transparent'} ${hidden ? 'nav-hidden' : 'nav-visible'}`}>
+          <div className="max-w-6xl mx-auto px-4 h-15">
+            <div className="flex items-center justify-between py-3">
+              {/* Logo */}
+              <a href="#" className="flex items-center gap-2 group">
+                <div
+                  className="logo-anim w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-sm font-black shadow-lg shadow-brand-500/30"
+                  style={{ display: 'inline-flex' }}
+                >K</div>
+                <div className="flex flex-col leading-none">
+                  <span className="font-black text-white tracking-tight">{ME.name}</span>
+                  <span className="text-[10px] text-brand-400 font-semibold uppercase tracking-widest">{ME.tagline}</span>
+                </div>
+              </a>
+
+              {/* Desktop links */}
+              <div className="hidden md:flex items-center gap-1">
+                {NAV_LINKS.map(l => (
+                  <a key={l.href} href={l.href}
+                    className="relative px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 group">
+                    {l.label}
+                    <span className="absolute inset-x-2 -bottom-0.5 h-px bg-brand-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 rounded-full"></span>
+                  </a>
+                ))}
+                <a href="https://github.com/truekiwwy" target="_blank" rel="noopener"
+                  className="ml-2 px-4 py-1.5 rounded-xl bg-brand-500/10 border border-brand-500/30 text-brand-300 text-sm font-semibold hover:bg-brand-500/20 transition-all duration-200">
+                  GitHub ↗
+                </a>
+              </div>
+
+              {/* Burger mobile */}
+              <button onClick={() => setMobileOpen(!mobileOpen)}
+                className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all">
+                <div className={`w-5 h-0.5 bg-current mb-1.5 transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`}></div>
+                <div className={`w-5 h-0.5 bg-current mb-1.5 transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`}></div>
+                <div className={`w-5 h-0.5 bg-current transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`}></div>
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile menu */}
+          <div className={`md:hidden nav-blur border-t border-white/5 overflow-hidden transition-all duration-300 ${mobileOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+            <div className="px-4 py-3 space-y-1">
+              {NAV_LINKS.map(l => (
+                <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+                  {l.label}
+                </a>
+              ))}
+              <a href="https://github.com/truekiwwy" className="block mt-2 px-3 py-2 rounded-xl bg-brand-500/10 border border-brand-500/30 text-brand-300 text-sm font-semibold text-center">
+                GitHub ↗
+              </a>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    // ── Composant : Hero ──────────────────────────────────────────────────────────
+    function Hero() {
+      const typed = useTyping(ROLES);
+      const codeLines = getCodeLines(typed);
+
+      return (
+        <section id="home" className="hero-gradient min-h-screen flex items-center relative overflow-hidden">
+          {/* Orbs de fond */}
+          <div className="orb orb-1"></div>
+          <div className="orb orb-2"></div>
+          <div className="orb orb-3"></div>
+
+          <div className="max-w-6xl mx-auto px-4 pt-24 pb-16 w-full relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+              {/* ─ Texte gauche ─ */}
+              <div>
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-brand-300 text-xs font-semibold mb-6"
+                  style={{ animation: 'fadeIn 0.6s ease-out' }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Disponible pour des projets
+                  {/* ✏️ Change ce message si tu veux (ex: "En recherche d'alternance") */}
+                </div>
+
+                {/* Titre */}
+                <h1 className="font-black leading-none mb-4" style={{ fontSize: 'clamp(2.6rem,5vw,4rem)' }}>
+                  <span className="block text-white mb-1">{ME.name}</span>
+                  <span className="block" style={{ fontSize: 'clamp(1.6rem,3vw,2.5rem)' }}>
+                    <span className="gt">{typed}</span>
+                    <span className="cursor text-brand-400 ml-0.5">|</span>
+                  </span>
+                </h1>
+
+                {/* Description */}
+                <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-md">
+                  {ME.description}
+                </p>
+
+                {/* CTA buttons */}
+                <div className="flex flex-wrap gap-3">
+                  <a href="#projects"
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold hover:from-brand-400 hover:to-brand-500 transition-all duration-300 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 hover:scale-105 flex items-center gap-2">
+                    <span>🚀</span> Voir mes projets
+                  </a>
+                  <a href="#contact"
+                    className="px-6 py-3 rounded-xl glass text-white font-semibold hover:bg-white/10 transition-all duration-300 flex items-center gap-2">
+                    Me contacter <span>→</span>
+                  </a>
+                  {/* ✏️ Ajoute/change les boutons ici si besoin */}
+                </div>
+              </div>
+
+              {/* ─ Fausse fenêtre de code ─ */}
+              <div className="lg:block">
+                <div className="glass rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-brand-500/10"
+                  style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+
+                  {/* Barre de titre de l'éditeur */}
+                  <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
+                    <div className="flex items-center gap-3">
+                      {/* Dots macOS */}
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/5 border border-white/10">
+                        <span className="text-yellow-400 text-xs">JS</span>
+                        <span className="text-gray-400 text-xs">developer.js</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 text-gray-600 text-xs">
+                      <span>—</span><span>⬜</span><span>✕</span>
+                    </div>
+                  </div>
+
+                  {/* Contenu du code */}
+                  <div className="p-5 text-sm leading-7">
+                    {codeLines.map(line => (
+                      <div key={line.num} className="flex gap-4">
+                        <span className="text-gray-700 select-none w-4 text-right flex-shrink-0">{line.num}</span>
+                        <span className="text-gray-300">{line.content}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Barre de statut */}
+                  <div className="flex items-center justify-between px-4 py-2 bg-brand-500/10 border-t border-white/5 text-xs text-gray-500">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Node.js 20
+                    </span>
+                    <span>UTF-8</span>
+                    <span>JavaScript</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Dégradé bas */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-950 to-transparent pointer-events-none"></div>
+        </section>
+      );
+    }
+
+    // ── Composant : Projets ───────────────────────────────────────────────────────
+    function Projects() {
+      // Tilt 3D au hover pour les projets featured
+      const handleMouseMove = (e, card) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rx = (y - cy) / 12;
+        const ry = (cx - x) / 12;
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+      };
+      const handleMouseLeave = (card) => { card.style.transform = ''; };
+
+      return (
+        <section id="projects" className="py-24 bg-gray-950">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 text-xs font-bold uppercase tracking-widest mb-4 border border-brand-500/20">PROJETS</span>
+              <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">Ce que j'ai créé</h2>
+              <p className="text-gray-400 text-lg">Quelques projets qui représentent mon travail</p>
+              {/* ✏️ Change le titre et la description de la section ici */}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {PROJECTS.map((p, i) => (
+                <div key={i}
+                  className={`project-card glass rounded-2xl p-6 bg-gradient-to-br ${p.color} border ${p.border} flex flex-col gap-4 cursor-default reveal ${p.featured ? 'md:col-span-2 md:w-3/4 md:mx-auto lg:w-full lg:col-span-1' : ''}`}
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                  onMouseMove={e => handleMouseMove(e, e.currentTarget)}
+                  onMouseLeave={e => handleMouseLeave(e.currentTarget)}>
+                  <div className="text-4xl">{p.emoji}</div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">{p.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{p.desc}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {p.tags.map(t => (
+                      <span key={t} className="px-2 py-0.5 rounded-lg bg-white/5 border border-white/10 text-gray-400 text-xs font-mono">{t}</span>
+                    ))}
+                  </div>
+                  {p.link !== "#" && (
+                    <a href={p.link} target="_blank" rel="noopener"
+                      className="inline-flex items-center gap-1 text-brand-300 text-sm font-semibold hover:text-brand-200 transition-colors">
+                      {p.linkLabel}
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── Composant : Skills ────────────────────────────────────────────────────────
+    function Skills() {
+      const categories = [...new Set(SKILLS.map(s => s.category))];
+
+      return (
+        <section id="skills" className="py-24 bg-gray-900/30">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4 border border-indigo-500/20">COMPÉTENCES</span>
+              <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">Ma stack technique</h2>
+              <p className="text-gray-400 text-lg">Les outils avec lesquels je travaille</p>
+              {/* ✏️ Change le titre et la description ici */}
+            </div>
+
+            {categories.map(cat => {
+              const catSkills = SKILLS.filter(s => s.category === cat);
+              return (
+                <div key={cat} className="mb-10 reveal">
+                  <h3 className="text-center text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 flex items-center justify-center gap-3">
+                    <span className="flex-1 h-px bg-white/5"></span>
+                    {cat}
+                    <span className="flex-1 h-px bg-white/5"></span>
+                  </h3>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {catSkills.map((skill, i) => (
+                      <div key={i}
+                        className="skill-card glass rounded-2xl p-4 border border-white/8 flex flex-col items-center justify-center gap-2 cursor-default"
+                        style={{ width: '110px', height: '120px' }}>
+                        <div className="skill-icon w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center border border-white/5 p-2">
+                          {skill.icon.startsWith('http') ? (
+                            <img src={skill.icon} alt={skill.name}
+                              className="w-full h-full object-contain"
+                              onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
+                            />
+                          ) : (
+                            <span className="text-3xl">{skill.icon}</span>
+                          )}
+                          {/* ✏️ Si tu veux utiliser un emoji à la place d'une image :
+                           remplace icon: "https://..." par icon: "🐍" (par exemple)
+                           et le rendu passera automatiquement en emoji */}
+                        </div>
+                        <span className="text-xs font-semibold text-gray-400 text-center truncate w-full text-center">{skill.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      );
+    }
+
+    // ── Composant : Contact ───────────────────────────────────────────────────────
+    function Contact() {
+      return (
+        <section id="contact" className="py-24 bg-gray-950">
+          <div className="max-w-5xl mx-auto px-4">
+            <div className="text-center mb-14 reveal">
+              <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-4 border border-emerald-500/20">CONTACT</span>
+              <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">Où me trouver ?</h2>
+              <p className="text-gray-400 text-lg">N'hésite pas à me contacter !</p>
+              {/* ✏️ Change le titre et la description ici */}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              {CONTACTS.map((c, i) => (
+                <a key={i} href={c.href} target={c.href.startsWith('http') ? '_blank' : '_self'} rel="noopener"
+                  className={`contact-card glass rounded-2xl p-8 text-center flex flex-col items-center gap-4 no-underline border ${c.border} bg-gradient-to-br ${c.color} reveal`}
+                  style={{ animationDelay: `${i * 0.1}s` }}>
+                  <div className="contact-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-3xl shadow-lg shadow-brand-500/30">
+                    {c.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">{c.title}</h3>
+                    <p className="text-gray-400 text-sm">{c.subtitle}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── Composant : Footer ────────────────────────────────────────────────────────
+    function Footer() {
+      return (
+        <footer className="bg-black border-t border-white/5 py-10">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-8">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-xs font-black">K</div>
+                <span className="font-bold">{ME.name}</span>
+              </div>
+              <div className="flex items-center gap-4 text-sm text-gray-500">
+
+              </div>
+            </div>
+            {/* Ligne séparatrice orange/violet style Kurama */}
+            <div className="h-px mb-6" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(123,104,238,0.4) 50%, transparent 100%)' }}></div>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-600">
+              <p>© 2026 {ME.name}. Tous droits réservés.</p>
+              <p>Made by {ME.name}</p>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    // ── App racine ────────────────────────────────────────────────────────────────
+    function App() {
+      useReveal(); // active les animations au scroll pour toute la page
+
+      return (
+        <>
+          <Navbar />
+          <Hero />
+          <Projects />
+          <Skills />
+          <Contact />
+          <Footer />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+
+</html>
