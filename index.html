@@ -341,10 +341,15 @@
       "Fullstack Dev",
     ];
 
+    // ── Fenêtre de code (ce qui apparaît dans le faux éditeur) ───────────────────
+    // ✏️ Tu peux changer les valeurs entre guillemets (parties vertes)
+    // ✏️ La ligne "role" se synchronise AUTOMATIQUEMENT avec l'animation ROLES ci-dessus
+    // ✏️ Ne touche pas aux balises HTML elles-mêmes
+    // Note: CODE_LINES est maintenant une fonction qui reçoit le texte typé en temps réel
     const getCodeLines = (typedRole) => [
       { num: 1, content: <><span className="c-kw">const</span> <span className="c-var">developer</span> = {'{'}</> },
       { num: 2, content: <>&nbsp;&nbsp;<span className="c-prop">name</span>: <span className="c-str">'truekiwwy_'</span>,</> },
-
+      // ✏️ Ligne 2 : change 'truekiwwy_' par ton nom/pseudo
       {
         num: 3, content: (
           <>&nbsp;&nbsp;<span className="c-prop">role</span>:&nbsp;
@@ -354,14 +359,15 @@
         )
       },
       { num: 4, content: <>&nbsp;&nbsp;<span className="c-prop">languages</span>: [<span className="c-str">'JS'</span>, <span className="c-str">'Python'</span>, <span className="c-str">'HTML'</span>, <span className="c-str">'CSS'</span>, <span className="c-str">'TypeScript'</span>, <span className="c-str">'Node.js'</span>],</> },
-
+      // ✏️ Ligne 6 : liste tes langages entre crochets
       { num: 5, content: <>{'}'}</> },
       { num: 6, content: <></> },
       { num: 7, content: <><span className="c-fn">console</span>.<span className="c-fn">log</span>(<span className="c-str">'developer'</span>);</> },
-
+      // ✏️ Ligne 9 : change le message entre guillemets
     ];
 
-
+    // ── Projets mis en avant ──────────────────────────────────────────────────────
+    // ✏️ Chaque objet = une carte projet. Ajoute/supprime des blocs { ... }
     const PROJECTS = [
       {
         emoji: "🤖",
@@ -387,34 +393,55 @@
       }
     ];
 
+    // ── Skills (cartes technos avec icône) ───────────────────────────────────────
+    // ✏️ Chaque objet = une icône dans la grille
+    // ✏️ Pour l'icône : utilise une URL d'image ou un emoji dans le champ "icon"
+    //    Exemples d'URLs gratuites : https://cdn.jsdelivr.net/gh/devicons/devicon/icons/[nom]/[nom]-original.svg
+    //    Exemples : javascript/javascript-original.svg | python/python-original.svg | nodejs/nodejs-original.svg
     const SKILLS = [
       // ── Langages ──
       { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", category: "Langages" },
       { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", category: "Langages" },
       { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", category: "Langages" },
       { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", category: "Langages" },
+      // ✏️ Ajoute tes langages ici en copiant une ligne ci-dessus
+      // Exemple : { name: "Lua", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg", category: "Langages" },
 
+      // ── Frameworks / Outils ──
       { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Outils" },
       { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", category: "Outils" },
       { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", category: "Outils" },
+      // ✏️ Ajoute tes outils ici
 
+      // ── Systèmes ──
       { name: "Linux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", category: "Systèmes" },
-
+      // ✏️ Ajoute tes systèmes ici
     ];
 
+    // ── Liens de contact ─────────────────────────────────────────────────────────
+    // ✏️ Modifie les href et labels
     const CONTACTS = [
       { icon: "🐙", title: "GitHub", subtitle: "Voir mes repos", href: "https://github.com/truekiwwy", color: "from-gray-500/20 to-gray-700/10", border: "border-gray-500/30" },
       { icon: "💬", title: "Discord", subtitle: "Rejoindre le serveur", href: "https://discord.gg/BwxtDgBDzE", color: "from-brand-500/20 to-brand-600/10", border: "border-brand-500/30" },
       { icon: "📧", title: "Email", subtitle: "kiwwy.123456789@gmail.com", href: "mailto:kiwwy.123456789@gmail.com", color: "from-brand-500/20 to-brand-600/10", border: "border-brand-500/30" }
     ];
 
+    // ── Liens navbar ─────────────────────────────────────────────────────────────
     const NAV_LINKS = [
       { id: "projects", label: "Projets" },
       { id: "skills", label: "Compétences" },
       { id: "contact", label: "Contact" },
-
+      // ✏️ Ajoute/supprime des liens ici
     ];
 
+    /* ═══════════════════════════════════════════════
+       FIN DE LA ZONE À MODIFIER
+       Le reste est la logique et le rendu — ne modifie
+       que si tu sais ce que tu fais !
+       ═══════════════════════════════════════════════ */
+
+
+    // ── Hook : typing animation ───────────────────────────────────────────────────
     function useTyping(roles) {
       const [displayed, setDisplayed] = useState('');
       const [roleIdx, setRoleIdx] = useState(0);
@@ -448,6 +475,7 @@
       return displayed;
     }
 
+    // ── Hook : smart navbar (hide/show on scroll) ─────────────────────────────────
     function useSmartNav() {
       const [scrolled, setScrolled] = useState(false);
       const [hidden, setHidden] = useState(false);
@@ -461,9 +489,9 @@
               const y = window.scrollY;
               setScrolled(y > 50);
               if (y > lastY.current && y > 100) {
-                setHidden(true);  
+                setHidden(true);   // scroll down → cache
               } else {
-                setHidden(false);  
+                setHidden(false);  // scroll up  → montre
               }
               lastY.current = y <= 0 ? 0 : y;
               ticking = false;
@@ -478,6 +506,7 @@
       return { scrolled, hidden };
     }
 
+    // ── Hook : IntersectionObserver pour reveal au scroll ────────────────────────
     function useReveal() {
       useEffect(() => {
         const els = document.querySelectorAll('.reveal');
@@ -489,6 +518,7 @@
       }, []);
     }
 
+    // ── Composant : Navbar ────────────────────────────────────────────────────────
     function Navbar() {
       const { scrolled, hidden } = useSmartNav();
       const [mobileOpen, setMobileOpen] = useState(false);
@@ -527,6 +557,7 @@
                 </div>
               </a>
 
+              {/* Desktop links */}
               <div className="hidden md:flex items-center gap-1">
                 {NAV_LINKS.map(l => (
                   <a key={l.id} href={`#${l.id}`} onClick={(e) => scrollTo(e, l.id)}
@@ -551,6 +582,7 @@
             </div>
           </div>
 
+          {/* Mobile menu */}
           <div className={`md:hidden nav-blur border-t border-white/5 overflow-hidden transition-all duration-300 ${mobileOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
             <div className="px-4 py-3 space-y-1">
               {NAV_LINKS.map(l => (
@@ -568,6 +600,7 @@
       );
     }
 
+    // ── Composant : Hero ──────────────────────────────────────────────────────────
     function Hero() {
       const typed = useTyping(ROLES);
       const codeLines = getCodeLines(typed);
@@ -580,34 +613,35 @@
         }
       };
 
+      // Tilt 3D au hover pour la fausse console
       const handleMouseMove = (e, card) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         const cx = rect.width / 2;
         const cy = rect.height / 2;
-        const rx = (y - cy) / 25;
+        const rx = (y - cy) / 25; // Division par 25 pour un effet subtil sur la large console
         const ry = (cx - x) / 25;
-        card.style.transition = 'none'; 
+        card.style.transition = 'none'; // Pas de délai pour que ça suive la souris
         card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
         card.style.boxShadow = '0 30px 60px rgba(0, 119, 182, 0.2)';
       };
 
       const handleMouseLeave = (card) => {
-        card.style.transition = 'transform 0.6s ease-out, box-shadow 0.6s ease-out';
+        card.style.transition = 'transform 0.6s ease-out, box-shadow 0.6s ease-out'; // Retour au calme fluide
         card.style.transform = '';
         card.style.boxShadow = '';
       };
 
       return (
         <section id="home" className="hero-gradient min-h-screen flex items-center relative overflow-hidden">
-
+          {/* Banner de fond */}
           <div className="absolute top-0 left-0 right-0 md:bottom-0 z-0 opacity-20 pointer-events-none">
             <img src="banner.png" className="w-full h-auto md:h-full object-contain md:object-cover object-top md:object-center md:scale-105" alt="" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/80 to-gray-950"></div>
           </div>
 
-
+          {/* Orbs de fond */}
           <div className="orb orb-1"></div>
           <div className="orb orb-2"></div>
           <div className="orb orb-3"></div>
@@ -615,16 +649,17 @@
           <div className="max-w-6xl mx-auto px-4 pt-24 pb-16 w-full relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-
+              {/* ─ Texte gauche ─ */}
               <div>
-
+                {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-brand-300 text-xs font-semibold mb-6"
                   style={{ animation: 'fadeIn 0.6s ease-out' }}>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   Disponible pour des projets
+                  {/* ✏️ Change ce message si tu veux (ex: "En recherche d'alternance") */}
                 </div>
 
-
+                {/* Titre */}
                 <h1 className="font-black leading-none mb-4" style={{ fontSize: 'clamp(2.6rem,5vw,4rem)' }}>
                   <span className="block text-white mb-1">{ME.name}</span>
                   <span className="block" style={{ fontSize: 'clamp(1.6rem,3vw,2.5rem)' }}>
@@ -633,12 +668,12 @@
                   </span>
                 </h1>
 
-
+                {/* Description */}
                 <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-md">
                   {ME.description}
                 </p>
 
-
+                {/* CTA buttons */}
                 <div className="flex flex-wrap gap-3">
                   <a href="#projects" onClick={scrollToProjects}
                     className="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold hover:from-brand-400 hover:to-brand-500 transition-all duration-300 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 hover:scale-105 flex items-center gap-2">
@@ -648,19 +683,21 @@
                     className="px-6 py-3 rounded-xl glass text-white font-semibold hover:bg-white/10 transition-all duration-300 flex items-center gap-2">
                     Me contacter <span>→</span>
                   </a>
-
+                  {/* ✏️ Ajoute/change les boutons ici si besoin */}
                 </div>
               </div>
 
+              {/* ─ Fausse fenêtre de code ─ */}
               <div className="lg:block cursor-crosshair">
                 <div className="glass rounded-2xl overflow-hidden border border-white/15 shadow-2xl shadow-brand-500/30"
                   style={{ fontFamily: 'JetBrains Mono, monospace', background: 'rgba(10, 10, 20, 0.4)' }}
                   onMouseMove={e => handleMouseMove(e, e.currentTarget)}
                   onMouseLeave={e => handleMouseLeave(e.currentTarget)}>
 
+                  {/* Barre de titre de l'éditeur */}
                   <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
                     <div className="flex items-center gap-3">
-
+                      {/* Dots macOS */}
                       <div className="flex gap-1.5">
                         <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
                         <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
@@ -676,6 +713,7 @@
                     </div>
                   </div>
 
+                  {/* Contenu du code */}
                   <div className="p-5 text-sm leading-7">
                     {codeLines.map(line => (
                       <div key={line.num} className="flex gap-4">
@@ -683,7 +721,9 @@
                         <span className="text-gray-300">{line.content}</span>
                       </div>
                     ))}
+                  </div>
 
+                  {/* Barre de statut */}
                   <div className="flex items-center justify-between px-4 py-2 bg-brand-500/10 border-t border-white/5 text-xs text-gray-500">
                     <span className="flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Node.js 20
@@ -697,7 +737,7 @@
             </div>
           </div>
 
-
+          {/* Dégradé bas */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-950 to-transparent pointer-events-none"></div>
         </section>
       );
@@ -705,7 +745,7 @@
 
     // ── Composant : Projets ───────────────────────────────────────────────────────
     function Projects() {
-
+      // Tilt 3D au hover pour les projets featured
       const handleMouseMove = (e, card) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -725,6 +765,7 @@
               <span className="inline-block px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 text-xs font-bold uppercase tracking-widest mb-4 border border-brand-500/20">PROJETS</span>
               <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">Ce que j'ai créé</h2>
               <p className="text-gray-400 text-lg">Quelques projets qui représentent mon travail</p>
+              {/* ✏️ Change le titre et la description de la section ici */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -758,7 +799,7 @@
       );
     }
 
-
+    // ── Composant : Skills ────────────────────────────────────────────────────────
     function Skills() {
       const categories = [...new Set(SKILLS.map(s => s.category))];
 
@@ -769,7 +810,7 @@
               <span className="inline-block px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4 border border-indigo-500/20">COMPÉTENCES</span>
               <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">Ma stack technique</h2>
               <p className="text-gray-400 text-lg">Les outils avec lesquels je travaille</p>
-              
+              {/* ✏️ Change le titre et la description ici */}
             </div>
 
             {categories.map(cat => {
@@ -795,9 +836,9 @@
                           ) : (
                             <span className="text-3xl">{skill.icon}</span>
                           )}
-                          {
-                            
-                          }
+                          {/* ✏️ Si tu veux utiliser un emoji à la place d'une image :
+                           remplace icon: "https://..." par icon: "🐍" (par exemple)
+                           et le rendu passera automatiquement en emoji */}
                         </div>
                         <span className="text-xs font-semibold text-gray-400 text-center truncate w-full text-center">{skill.name}</span>
                       </div>
@@ -811,7 +852,7 @@
       );
     }
 
-
+    // ── Composant : Contact ───────────────────────────────────────────────────────
     function Contact() {
       return (
         <section id="contact" className="py-24 bg-gray-950">
@@ -820,7 +861,7 @@
               <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-4 border border-emerald-500/20">CONTACT</span>
               <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">Où me trouver ?</h2>
               <p className="text-gray-400 text-lg">N'hésite pas à me contacter !</p>
-
+              {/* ✏️ Change le titre et la description ici */}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
@@ -843,7 +884,7 @@
       );
     }
 
-
+    // ── Composant : Footer ────────────────────────────────────────────────────────
     function Footer() {
       return (
         <footer className="bg-black border-t border-white/5 py-10">
@@ -857,7 +898,7 @@
 
               </div>
             </div>
-            {                                            }
+            {/* Ligne séparatrice orange/violet style Kurama */}
             <div className="h-px mb-6" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(123,104,238,0.4) 50%, transparent 100%)' }}></div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-600">
               <p>© 2026 {ME.name}. Tous droits réservés.</p>
@@ -868,7 +909,7 @@
       );
     }
 
-
+    // ── App racine ────────────────────────────────────────────────────────────────
     function App() {
       useReveal(); // active les animations au scroll pour toute la page
 
