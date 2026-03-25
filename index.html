@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>truekiwwy_ — Développeur & Créateur</title>
-  <link rel="icon" type="image/png" href="pfp.jpg">
+  <link rel="icon" type="image/png" href="pfp.jpg" />
   <meta name="description"
-    content="Portfolio de truekiwwy_ — Un dev qui bidouille des systèmes." />
+    content="Portfolio de truekiwwy_ — Développeur, créateur de bots Discord et passionné de tech." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -331,15 +331,15 @@
     const ME = {
       name: "truekiwwy_",           // ✏️ Ton pseudo/nom affiché
       tagline: "Portfolio",         // ✏️ Sous-titre sous le nom dans la navbar
-      description: "Je bidouille des systèmes pour transformer mes idées en projets.",
+      description: "Je bidouille des systèmes pour transformer mes idées en projets concrets, tout en sécurisant le code pour le fun.",
       // ✏️ ↑ Phrase de présentation dans le hero
     };
 
     // ── Animation de typing (les rôles qui s'écrivent/s'effacent) ────────────────
     const ROLES = [
-      "Discord bot dev",    // ✏️ Modifie ces mots — ils s'affichent en boucle
-      "Network Engineer",
-      "Fullstack Dev",
+      "Developpeur",    // ✏️ Modifie ces mots — ils s'affichent en boucle
+      "Bot Creator",
+      "Front Dev",
     ];
 
     // ── Fenêtre de code (ce qui apparaît dans le faux éditeur) ───────────────────
@@ -614,8 +614,6 @@
         }
       };
 
-
-      
       // Tilt 3D au hover pour la fausse console
       const handleMouseMove = (e, card) => {
         const rect = card.getBoundingClientRect();
@@ -629,19 +627,19 @@
         card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
         card.style.boxShadow = '0 30px 60px rgba(0, 119, 182, 0.2)';
       };
-      
-      const handleMouseLeave = (card) => { 
+
+      const handleMouseLeave = (card) => {
         card.style.transition = 'transform 0.6s ease-out, box-shadow 0.6s ease-out'; // Retour au calme fluide
-        card.style.transform = ''; 
+        card.style.transform = '';
         card.style.boxShadow = '';
       };
-      
+
       return (
         <section id="home" className="hero-gradient min-h-screen flex items-center relative overflow-hidden">
           {/* Banner de fond */}
-          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-            <img src="banner.png" className="w-full h-full object-cover scale-105" alt="" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/60 to-gray-950"></div>
+          <div className="absolute top-0 left-0 right-0 h-[70vh] md:h-auto md:inset-0 z-0 opacity-20 pointer-events-none">
+            <img src="banner.png" className="w-full h-full object-cover object-[center_30%] md:object-center md:scale-105" alt="" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/80 to-gray-950"></div>
           </div>
 
           {/* Orbs de fond */}
@@ -931,4 +929,5 @@
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
 </body>
+
 </html>
