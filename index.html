@@ -4,8 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>truekiwwy_ — Développeur</title>
-  <link rel="icon" type="image/jpeg" href="pfp.jpg">
+  <title>truekiwwy_ — Développeur & Créateur</title>
   <meta name="description"
     content="Portfolio de truekiwwy_ — Développeur, créateur de bots Discord et passionné de tech." />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,11 +14,11 @@
         extend: {
           colors: {
             brand: {
-              300: '#c4b5fd',
-              400: '#a78bfa',
-              500: '#7B68EE',
-              600: '#5865F2',
-              900: '#1e1b4b',
+              300: '#48cae4',
+              400: '#00b4d8',
+              500: '#0077b6',
+              600: '#023e8a',
+              900: '#03045e',
             }
           },
           fontFamily: {
@@ -67,13 +66,13 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #7B68EE;
+      background: #48cae4;
       border-radius: 4px;
     }
 
     /* ─── Selection ─── */
     ::selection {
-      background: #7B68EE;
+      background: #48cae4;
       color: white;
     }
 
@@ -101,7 +100,7 @@
 
     /* ─── Hero gradient bg ─── */
     .hero-gradient {
-      background: radial-gradient(ellipse at top, #1e1b4b 0%, #0f0f23 50%, #0a0a14 100%);
+      background: radial-gradient(ellipse at top, #023e8a 0%, #03045e 50%, #0a0a14 100%);
     }
 
     /* ─── Orbs ─── */
@@ -133,7 +132,7 @@
     .orb-1 {
       width: 500px;
       height: 500px;
-      background: radial-gradient(#7B68EE, #5865F2);
+      background: radial-gradient(#0077b6, #023e8a);
       top: -200px;
       left: -150px;
       animation-delay: 0s;
@@ -142,7 +141,7 @@
     .orb-2 {
       width: 350px;
       height: 350px;
-      background: radial-gradient(#a78bfa, #60a5fa);
+      background: radial-gradient(#023e8a, #03045e);
       bottom: -100px;
       right: -100px;
       animation-delay: 7s;
@@ -151,7 +150,7 @@
     .orb-3 {
       width: 250px;
       height: 250px;
-      background: radial-gradient(#5865F2, #818cf8);
+      background: radial-gradient(#00b4d8, #0077b6);
       top: 50%;
       left: 55%;
       animation-delay: 14s;
@@ -331,7 +330,7 @@
     const ME = {
       name: "truekiwwy_",           // ✏️ Ton pseudo/nom affiché
       tagline: "Portfolio",         // ✏️ Sous-titre sous le nom dans la navbar
-      description: "Je crée des projets Discord, des bots, des sites web et des network tools. Développeur passionné, toujours en train de construire quelchose.",
+      description: "Je bidouille des systèmes pour transformer mes idées en projets concrets, tout en sécurisant le code pour le fun.",
       // ✏️ ↑ Phrase de présentation dans le hero
     };
 
@@ -378,7 +377,7 @@
         link: "https://discord.com/oauth2/authorize?client_id=1273585101296500767&permissions=8&scope=bot",
         linkLabel: "Voir le bot →",
         featured: true,
-        color: "from-brand-500/15 to-indigo-600/10",
+        color: "from-brand-500/15 to-brand-600/10",
         border: "border-brand-500/20",
       },
       {
@@ -389,8 +388,8 @@
         link: "#",
         linkLabel: "Tu y es déjà !",
         featured: false,
-        color: "from-blue-500/15 to-cyan-600/10",
-        border: "border-blue-500/20",
+        color: "from-brand-500/15 to-brand-600/10",
+        border: "border-brand-500/20",
       }
     ];
 
@@ -423,15 +422,15 @@
     // ✏️ Modifie les href et labels
     const CONTACTS = [
       { icon: "🐙", title: "GitHub", subtitle: "Voir mes repos", href: "https://github.com/truekiwwy", color: "from-gray-500/20 to-gray-700/10", border: "border-gray-500/30" },
-      { icon: "💬", title: "Discord", subtitle: "Rejoindre le serveur", href: "https://discord.gg/BwxtDgBDzE", color: "from-indigo-500/20 to-brand-600/10", border: "border-indigo-500/30" },
-      { icon: "📧", title: "Email", subtitle: "kiwwy.123456789@gmail.com", href: "mailto:kiwwy.123456789@gmail.com", color: "from-brand-500/20 to-violet-600/10", border: "border-brand-500/30" }
+      { icon: "💬", title: "Discord", subtitle: "Rejoindre le serveur", href: "https://discord.gg/BwxtDgBDzE", color: "from-brand-500/20 to-brand-600/10", border: "border-brand-500/30" },
+      { icon: "📧", title: "Email", subtitle: "kiwwy.123456789@gmail.com", href: "mailto:kiwwy.123456789@gmail.com", color: "from-brand-500/20 to-brand-600/10", border: "border-brand-500/30" }
     ];
 
     // ── Liens navbar ─────────────────────────────────────────────────────────────
     const NAV_LINKS = [
-      { href: "#projects", label: "Projets" },
-      { href: "#skills", label: "Compétences" },
-      { href: "#contact", label: "Contact" },
+      { id: "projects", label: "Projets" },
+      { id: "skills", label: "Compétences" },
+      { id: "contact", label: "Contact" },
       // ✏️ Ajoute/supprime des liens ici
     ];
 
@@ -524,12 +523,30 @@
       const { scrolled, hidden } = useSmartNav();
       const [mobileOpen, setMobileOpen] = useState(false);
 
+      const scrollTo = (e, id) => {
+        e.preventDefault();
+        const el = document.getElementById(id);
+        if (el) {
+          const offset = 80;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = el.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          setMobileOpen(false);
+        }
+      };
+
       return (
         <nav className={`fixed top-0 left-0 right-0 z-50 ${scrolled ? 'nav-blur shadow-xl' : 'bg-transparent'} ${hidden ? 'nav-hidden' : 'nav-visible'}`}>
           <div className="max-w-6xl mx-auto px-4 h-15">
             <div className="flex items-center justify-between py-3">
               {/* Logo */}
-              <a href="#" className="flex items-center gap-2 group">
+              <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-2 group">
                 <div
                   className="logo-anim w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-sm font-black shadow-lg shadow-brand-500/30"
                   style={{ display: 'inline-flex' }}
@@ -543,7 +560,7 @@
               {/* Desktop links */}
               <div className="hidden md:flex items-center gap-1">
                 {NAV_LINKS.map(l => (
-                  <a key={l.href} href={l.href}
+                  <a key={l.id} href={`#${l.id}`} onClick={(e) => scrollTo(e, l.id)}
                     className="relative px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 group">
                     {l.label}
                     <span className="absolute inset-x-2 -bottom-0.5 h-px bg-brand-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 rounded-full"></span>
@@ -569,7 +586,7 @@
           <div className={`md:hidden nav-blur border-t border-white/5 overflow-hidden transition-all duration-300 ${mobileOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
             <div className="px-4 py-3 space-y-1">
               {NAV_LINKS.map(l => (
-                <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
+                <a key={l.id} href={`#${l.id}`} onClick={(e) => scrollTo(e, l.id)}
                   className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-all">
                   {l.label}
                 </a>
@@ -588,8 +605,22 @@
       const typed = useTyping(ROLES);
       const codeLines = getCodeLines(typed);
 
+      const scrollToProjects = (e) => {
+        e.preventDefault();
+        const el = document.getElementById('projects');
+        if (el) {
+          window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+        }
+      };
+
       return (
         <section id="home" className="hero-gradient min-h-screen flex items-center relative overflow-hidden">
+          {/* Banner de fond discret */}
+          <div className="absolute inset-0 z-0 opacity-[0.07] pointer-events-none">
+            <img src="banner.png" className="w-full h-full object-cover mix-blend-overlay scale-110" alt="" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/50 to-gray-950"></div>
+          </div>
+
           {/* Orbs de fond */}
           <div className="orb orb-1"></div>
           <div className="orb orb-2"></div>
@@ -624,7 +655,7 @@
 
                 {/* CTA buttons */}
                 <div className="flex flex-wrap gap-3">
-                  <a href="#projects"
+                  <a href="#projects" onClick={scrollToProjects}
                     className="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold hover:from-brand-400 hover:to-brand-500 transition-all duration-300 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 hover:scale-105 flex items-center gap-2">
                     <span>🚀</span> Voir mes projets
                   </a>
@@ -638,8 +669,8 @@
 
               {/* ─ Fausse fenêtre de code ─ */}
               <div className="lg:block">
-                <div className="glass rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-brand-500/10"
-                  style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                <div className="glass rounded-2xl overflow-hidden border border-white/15 shadow-2xl shadow-brand-500/30"
+                  style={{ fontFamily: 'JetBrains Mono, monospace', background: 'rgba(10, 10, 20, 0.4)' }}>
 
                   {/* Barre de titre de l'éditeur */}
                   <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
