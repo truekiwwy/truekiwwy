@@ -614,6 +614,28 @@
         }
       };
 
+
+      
+      // Tilt 3D au hover pour la fausse console
+      const handleMouseMove = (e, card) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rx = (y - cy) / 25; // Division par 25 pour un effet subtil sur la large console
+        const ry = (cx - x) / 25;
+        card.style.transition = 'none'; // Pas de délai pour que ça suive la souris
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+        card.style.boxShadow = '0 30px 60px rgba(0, 119, 182, 0.2)';
+      };
+      
+      const handleMouseLeave = (card) => { 
+        card.style.transition = 'transform 0.6s ease-out, box-shadow 0.6s ease-out'; // Retour au calme fluide
+        card.style.transform = ''; 
+        card.style.boxShadow = '';
+      };
+      
       return (
         <section id="home" className="hero-gradient min-h-screen flex items-center relative overflow-hidden">
           {/* Banner de fond */}
@@ -669,9 +691,11 @@
               </div>
 
               {/* ─ Fausse fenêtre de code ─ */}
-              <div className="lg:block">
+              <div className="lg:block cursor-crosshair">
                 <div className="glass rounded-2xl overflow-hidden border border-white/15 shadow-2xl shadow-brand-500/30"
-                  style={{ fontFamily: 'JetBrains Mono, monospace', background: 'rgba(10, 10, 20, 0.4)' }}>
+                  style={{ fontFamily: 'JetBrains Mono, monospace', background: 'rgba(10, 10, 20, 0.4)' }}
+                  onMouseMove={e => handleMouseMove(e, e.currentTarget)}
+                  onMouseLeave={e => handleMouseLeave(e.currentTarget)}>
 
                   {/* Barre de titre de l'éditeur */}
                   <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
